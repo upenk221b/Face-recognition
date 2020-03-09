@@ -24,9 +24,9 @@ args = vars(ap.parse_args())
 # set your Microsoft Cognitive Services API key along with (1) the
 # maximum number of results for a given search and (2) the group size
 # for results (maximum of 50 per request)
-API_KEY = "INSERT_YOUR_API_KEY_HERE"
-MAX_RESULTS = 100
-GROUP_SIZE = 50
+API_KEY = "8b840820a4514b5c86d82e29c8ea28b3"
+MAX_RESULTS = 30
+GROUP_SIZE = 10
 
 # set the endpoint API URL
 URL = "https://api.cognitive.microsoft.com/bing/v7.0/images/search"
