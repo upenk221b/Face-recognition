@@ -1,0 +1,53 @@
+###first visit  https://www.pyimagesearch.com/2018/06/18/face-recognition-with-opencv-python-and-deep-learning/
+
+//Now install dlib and face_recognition liabraries
+#1.installing dlib
+//make sure you have cmake command on your device...
+if not install by using 
+$
+
+when you have cmake installed enter following commands
+method A) using pip
+$pip install dlib
+
+Method B) from source on github
+
+$git clone https://github.com/davisking/dlib.git
+$ cd dlib
+$ mkdir build
+$ cd build
+$ cmake .. -DUSE_AVX_INSTRUCTIONS=1
+$ cmake --build .
+$ cd ..
+$ sudo python setup.py install --yes USE_AVX_INSTRUCTIONS --yes DLIB_USE_CUDA
+
+######IF YOU VAHE CUDA GPU######
+if you have CUDA GPU use following commands...(only change cmake command)
+$git clone https://github.com/davisking/dlib.git
+$ cd dlib
+$ mkdir build
+$ cd build
+$ cmake .. -DDLIB_USE_CUDA=1 -DUSE_AVX_INSTRUCTIONS=1
+$ cmake --build .
+$ cd ..
+$ python setup.py install --yes USE_AVX_INSTRUCTIONS --yes DLIB_USE_CUDA
+//now Dlib liabray is installed
+//
+#2.installing face_recognition liabrary
+$pip install face_recognition
+https://github.com/ageitgey/face_recognition
+
+#3 install adrian's utility liabray
+pip install imutils
+https://github.com/jrosebr1/imutils
+
+Now the project is ready to use..
+1.create database by running search_bing_api.py
+2.create 128-d embedings and store these objects in serialized manner on disk using pickling
+# python encode_faces.py --dataset dataset --encodings encodings.pickle
+
+3.run following scripts
+ python recognize_faces_video.py --encodings encodings.pickle  (Live Streaming)
+
+python recognize_faces_image.py --encodings encodings.pickle --image examples/example_01.png 
+(image as a input)

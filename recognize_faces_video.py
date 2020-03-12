@@ -4,6 +4,9 @@
 
 # import the necessary packages
 from imutils.video import VideoStream
+from datetime import datetime
+import time
+from firebase import firebase
 import face_recognition
 import argparse
 import imutils
@@ -23,9 +26,17 @@ ap.add_argument("-d", "--detection-method", type=str, default="hog",
 	help="face detection model to use: either `hog` or `cnn`")
 args = vars(ap.parse_args())
 
+#database 
+firebase = firebase.FirebaseApplication("https://face-recognition-a4f2e.firebaseio.com/",None)
+
 # load the known faces and embeddings
 print("[INFO] loading encodings...")
 data = pickle.loads(open(args["encodings"], "rb").read())
+
+
+#create a dictionary of people entering the room
+timeFlag = {}
+
 
 # initialize the video stream and pointer to output video file, then
 # allow the camera sensor to warm up
@@ -33,7 +44,7 @@ print("[INFO] starting video stream...")
 vs = VideoStream(src=0).start()
 writer = None
 time.sleep(2.0)
-
+prevName = "Unknown"
 # loop over frames from the video file stream
 while True:
 	# grab the frame from the threaded video stream
@@ -60,7 +71,7 @@ while True:
 		matches = face_recognition.compare_faces(data["encodings"],
 			encoding)
 		name = "Unknown"
-
+		
 		# check to see if we have found a match
 		if True in matches:
 			# find the indexes of all matched faces then initialize a
@@ -98,13 +109,27 @@ while True:
 		cv2.putText(frame, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
 			0.75, (0, 255, 0), 2)
 
+
+		if (name in timeFlag.keys() and time.time() > timeFlag[name] + 30) or not name in timeFlag.keys():
+			timeFlag[name] = time.time()
+			today=str(datetime.now())
+			today=today.split(' ')
+			print(name, "entered in room ! at: ", today[1], today[0]);
+			
+			entry={
+				'Name': name ,
+				'date': today[0] ,
+				'time': today[1]
+				}
+			result= firebase.post('face-recognition-a4f2e/Logbook',entry)
+			print(result)
 	# if the video writer is None *AND* we are supposed to write
 	# the output video to disk initialize the writer
 	if writer is None and args["output"] is not None:
 		fourcc = cv2.VideoWriter_fourcc(*"MJPG")
 		writer = cv2.VideoWriter(args["output"], fourcc, 20,
 			(frame.shape[1], frame.shape[0]), True)
-
+###########################################################################################
 	# if the writer is not None, write the frame with recognized
 	# faces t odisk
 	if writer is not None:
