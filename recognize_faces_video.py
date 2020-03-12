@@ -6,6 +6,7 @@
 from imutils.video import VideoStream
 from datetime import datetime
 import time
+import os
 from firebase import firebase
 import face_recognition
 import argparse
@@ -32,16 +33,16 @@ firebase = firebase.FirebaseApplication("https://face-recognition-a4f2e.firebase
 # load the known faces and embeddings
 print("[INFO] loading encodings...")
 data = pickle.loads(open(args["encodings"], "rb").read())
+#data is dictioary which contains knownNames and knownEncodings
 
-
-#create a dictionary of people entering the room
+#create a dictionary for storing time of people entering the room
 timeFlag = {}
-
-
+img=0
 # initialize the video stream and pointer to output video file, then
 # allow the camera sensor to warm up
 print("[INFO] starting video stream...")
 vs = VideoStream(src=0).start()
+cap= cv2.VideoCapture(0)
 writer = None
 time.sleep(2.0)
 prevName = "Unknown"
@@ -49,7 +50,6 @@ prevName = "Unknown"
 while True:
 	# grab the frame from the threaded video stream
 	frame = vs.read()
-	
 	# convert the input frame from BGR to RGB then resize it to have
 	# a width of 750px (to speedup processing)
 	rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -114,14 +114,21 @@ while True:
 			timeFlag[name] = time.time()
 			today=str(datetime.now())
 			today=today.split(' ')
-			print(name, "entered in room ! at: ", today[1], today[0]);
+			img+=1
+			filename='IMG'+str(img)+'.jpg'
+			cv2.imwrite(filename,frame)
+			
+			print(" saved")
+			print(name, "entered in room ! at: ", today[1], today[0])
 			
 			entry={
 				'Name': name ,
 				'date': today[0] ,
-				'time': today[1]
+				'time': today[1]		
 				}
+			#print(entry)
 			result= firebase.post('face-recognition-a4f2e/Logbook',entry)
+			firebase.post('face-recognition-a4f2e/Faces',filename)
 			print(result)
 	# if the video writer is None *AND* we are supposed to write
 	# the output video to disk initialize the writer
