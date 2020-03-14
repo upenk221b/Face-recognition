@@ -1,2 +1,6 @@
 /dataset/*
+/images/*
+*.jpg
+*.png
+*.jpeg
 

@@ -7,6 +7,7 @@ from imutils.video import VideoStream
 from datetime import datetime
 import time
 import os
+from google.cloud import storage
 from firebase import firebase
 import face_recognition
 import argparse
@@ -28,7 +29,13 @@ ap.add_argument("-d", "--detection-method", type=str, default="hog",
 args = vars(ap.parse_args())
 
 #database 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/home/upendra/EDI_6/Face-recognition/face-recognition-a4f2e-5eed8804d09b.json"
 firebase = firebase.FirebaseApplication("https://face-recognition-a4f2e.firebaseio.com/",None)
+client = storage.Client()
+
+bucket = client.get_bucket('face-recognition-a4f2e.appspot.com')
+
+imageBlob = bucket.blob("/")
 
 # load the known faces and embeddings
 print("[INFO] loading encodings...")
@@ -50,6 +57,7 @@ prevName = "Unknown"
 while True:
 	# grab the frame from the threaded video stream
 	frame = vs.read()
+	frame1=frame
 	# convert the input frame from BGR to RGB then resize it to have
 	# a width of 750px (to speedup processing)
 	rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -111,24 +119,32 @@ while True:
 
 
 		if (name in timeFlag.keys() and time.time() > timeFlag[name] + 30) or not name in timeFlag.keys():
+			#get timestamp of function			
 			timeFlag[name] = time.time()
 			today=str(datetime.now())
 			today=today.split(' ')
+
+			#get a snapshots of person in images and save for a moment
+
 			img+=1
-			filename='IMG'+str(img)+'.jpg'
-			cv2.imwrite(filename,frame)
+			filename=name+today[0]+'_'+today[1]+'.jpg'
+			cv2.imwrite(filename,frame1)
 			
-			print(" saved")
+			print("saved")
+			#upload saved image to firebase and delete local image
+			imagePath = "/home/upendra/EDI_6/Face-recognition/"+str(filename)
+			imageBlob = bucket.blob("persons/"+str(filename))
+			imageBlob.upload_from_filename(imagePath)
 			print(name, "entered in room ! at: ", today[1], today[0])
-			
+			os.remove(imagePath)
+			#enter name and time in logbook and photo in visited people database
 			entry={
 				'Name': name ,
 				'date': today[0] ,
 				'time': today[1]		
 				}
 			#print(entry)
-			result= firebase.post('face-recognition-a4f2e/Logbook',entry)
-			firebase.post('face-recognition-a4f2e/Faces',filename)
+			result= firebase.post('Logbook',entry)
 			print(result)
 	# if the video writer is None *AND* we are supposed to write
 	# the output video to disk initialize the writer

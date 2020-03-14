@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "face-recognition-a4f2e",
+  "private_key_id": "5eed8804d09ba3e1362f62191b307df758695410",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC427qKWzxAKSmx\n1rO9nLO9qTYyR+ht2llEY3y3ch/s7mSEwdQwGaQ3V+gECwYPyOpU3yKVNpfH+AO/\nd4A+Uk/3K9Kj995y9r2HgovJhKavhTjmbO9x+S5C9rAgPliU4ePqRT39NNIwUovW\nWajnxCmtil3luXqM7+vjd6Uwq+bdqktMLWHg1Cx9grRW/R7TbIdxo9DGsELwqX3i\n8/z6UyF9qBM/sSK6yEwJE3aAOxan9RJ1IyogA1435YhE8XeBaVJOGkzMqc30B7jx\nEsHO5ItRYqspI3bbjI78b6+yYM733ZZJ33NEJLBbn8upsLj2U18+PWPKyRMbt46t\nt/Br//lRAgMBAAECggEALCOnNH8ZcVaC0qhp7ZX7owdC3hmmaYiP9RDuSB0ze07m\n6H4hrMSKnf5a85AwR9eZAF/xMYDCGCjjuDWQBRGBb4ritm0qi/fXhIJK33jRlipw\nzjBnsiamAa5GmsRYQWB4m8khxpJ0t74WDr4E4yZHL11RE1fI59snz34Tjv4U14t3\nfE/TDWuQM+R5rCQLlK5VB6YhTXUd3MN9YqDPnk8P/CWR3svLkU275AGReBEPnpey\nnn7LlX9NQu41t2+YZKIg0qi59J08081cKoLIggVLS6hm3WUZwkAWk8MOQ1ITuQMo\nxSOoodREGA6h2T7ml2TbDvoB/wLXftyOKwsgz+x1GwKBgQD8TdarEOW2VdUpQr+i\n3Hr8M0BSz4slbGYuZp8I5hV3JQKbS71103cFWavjmW+oLisjDrIUBKoUJTYP1EFG\n9XuIZGjnoeE6dNTXtbkstYeKD6hWhmwD6IvbV2esvDgPi9DPlCDUiDVwF35P/DIQ\nOwTqiJIT5ePKbQiahhQJ+iXUuwKBgQC7kPaBuNSDds4t4LArDB9IBfRMS/6K9Gzk\nxXrL/yBJjW/uomXGt5Np+gU85/rvqdKvGK3DFhdS88yjCaS7kKPYUAdBbsDt2WKR\nZmzQBUkOwQiPlPNjKBubiqIbxcl8fHO+7RkIs8oNEGpAUdQ4rmyflyIfZXmXBBhQ\n4NcRCRtPYwKBgAYbFCDbrdN1zEzNUrnsQAWub9YRM7raHrbswNiESOyzNpbvhEw/\nq9ezTdeaNPuK8nxMtL6LRlpqdB558oJ3GmA4ndlNL5gsj6IQwcR1OCx9KIO/iQmn\nLQtH2Dhz7Z9isND1Mr4x9akayHHDFqsR4pKSb4aPv618agLjT8TWCuhVAoGBAKQu\nUfhe53ZjyjoSUWJ86+zJeXxHkPnk1mSyD7j9CzAW5AGImXoGOr0rIuabUOX0Sv0F\npyP69FOiIGAeEtoz05eHBbLa1XndLRCFDX5RAhAuG+ZCxYDoHLJb+WZCDQowjch0\nFdOuPJCO69J9TjyHQYG4cx/0XSg5Z2d0SA0bYZJtAoGANmYTucyvudp6QEJi1YY2\naPoqN+fe/fuhGVlevNSRa7CLib9TyoxR/RXKy5HVgg/6kQWgRrl40+1C3fDkyiEX\nQTAeUQ/HefeHbrMuQKHQKD9WZC4HwnbKBN0nF1KcqFmhVeGmG+YlQmk2YJg7+hB3\ncNCG6fzvMhZycZaAlxs/8Lk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "face-recognition-a4f2e@appspot.gserviceaccount.com",
+  "client_id": "113140835385851622307",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/face-recognition-a4f2e%40appspot.gserviceaccount.com"
+}
