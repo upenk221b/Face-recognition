@@ -1,5 +1,6 @@
 /dataset/*
 /images/*
+/output/*
 *.jpg
 *.png
 *.jpeg

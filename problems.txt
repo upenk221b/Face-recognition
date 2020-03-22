@@ -1,0 +1,26 @@
+#1 In search of alternate video stream I tried droidcam. 
+with droidcam i got the high quality images as my mobile camera was better than inbuilt webcam.
+but problems:
+	i) droidcam streamed it's output to web browser window
+	and was unable to channek it to Opencv
+	
+	ii)installation of droidcam led to some changes and as 
+	src=0 was assigned to inbuilt webcam , now it was changed
+	to some other index. and this led to assertion error*.
+
+	[*assertion error] : this error is thrown when camera can't take images
+	and this empty image is given as input to the functions like cv.imshow() etc
+
+	iii) these video I/O files are present in "/dev/" folder "/dev/videox" file takes care 
+	of the video I/O at index 'x' .and somehow /dev/video0 was deleted and default webcam was shifted
+	to index 1.
+
+====>[soln]:
+	changing the index 0 to 1 fixed this problem . that's it!!
+	But IMP thing is knowing that index is changed to 1
+	the following command gives the list of vedio I/O 
+	$v4l2-ctl -d /dev/video1 --list-formats
+
+Edit: YOU DON'T NEED ALL THIS.WHEN I REBOOTED MY MACHINE.AND SAW THE FILES IN /DEV/ FOLDER .
+BEFORE THERE WERE video1 and video2
+NOW BACK TO NORMAL video0 and video1
