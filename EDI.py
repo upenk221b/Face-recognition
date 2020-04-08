@@ -29,7 +29,7 @@ ap.add_argument("-d", "--detection-method", type=str, default="hog",
 	help="face detection model to use: either `hog` or `cnn`")
 args = vars(ap.parse_args())
 
-#database 
+#database
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/home/upendra/EDI6/Face-recognition/face-recognition-a4f2e-5eed8804d09b.json"
 firebase = firebase.FirebaseApplication("https://face-recognition-a4f2e.firebaseio.com/",None)
 client = storage.Client()
@@ -81,7 +81,7 @@ while True:
 		matches = face_recognition.compare_faces(data["encodings"],
 			encoding)
 		name = "Unknown"
-		
+
 		# check to see if we have found a match
 		if True in matches:
 			# find the indexes of all matched faces then initialize a
@@ -100,7 +100,7 @@ while True:
 			# of votes (note: in the event of an unlikely tie Python
 			# will select first entry in the dictionary)
 			name = max(counts, key=counts.get)
-		
+
 		# update the list of names
 		names.append(name)
 
@@ -121,7 +121,7 @@ while True:
 
 
 		if (name in timeFlag.keys() and time.time() > timeFlag[name] + 30) or not name in timeFlag.keys():
-			#get timestamp of function			
+			#get timestamp of function
 			timeFlag[name] = time.time()
 			today=str(datetime.now())
 			today=today.split(' ')
@@ -131,19 +131,25 @@ while True:
 			img+=1
 			filename=name+today[0]+'_'+today[1]+'.jpg'
 			cv2.imwrite(filename,frame1)
-			
+
 			print("saved")
 			#upload saved image to firebase and delete local image
 			imagePath = "/home/upendra/EDI6/Face-recognition/"+str(filename)
 			imageBlob = bucket.blob("persons/"+str(filename))
 			imageBlob.upload_from_filename(imagePath)
+
+			#Trying app update
+			url=str(imageBlob.public_url)
+			print(url)
+
+			##### UPDATE ABOVE BLOCK ONLY###########
 			print(name, "entered in room ! at: ", today[1], today[0])
 			os.remove(imagePath)
 			#enter name and time in logbook and photo in visited people database
 			entry={
 				'Name': name ,
 				'date': today[0] ,
-				'time': today[1]		
+				'time': today[1]
 				}
 			#print(entry)
 			result= firebase.post('Logbook',entry)
