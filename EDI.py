@@ -138,18 +138,18 @@ while True:
 			imageBlob = bucket.blob("persons/"+str(filename))
 			imageBlob.upload_from_filename(imagePath)
 
-			#Trying app update
-			url=str(imageBlob.public_url)
-			print(url)
-
-			##### UPDATE ABOVE BLOCK ONLY###########
+			#getting image url
+			expiration_date = datetime.strptime("31/12/30 00:00", "%d/%m/%y %H:%M")
+			url = imageBlob.generate_signed_url(expiration=expiration_date)
+			#expiration date of url set to 31 Dec 2030
 			print(name, "entered in room ! at: ", today[1], today[0])
 			os.remove(imagePath)
 			#enter name and time in logbook and photo in visited people database
 			entry={
 				'Name': name ,
 				'date': today[0] ,
-				'time': today[1]
+				'time': today[1] ,
+				'image': url
 				}
 			#print(entry)
 			result= firebase.post('Logbook',entry)
